@@ -1,4 +1,6 @@
-## Guestbook Example
+## Guestbook: Istio workshop at Dash
+
+Note: This is the modified guestbook for use only at Datadog Dash. For any other purpose, see the upstream guest book [here](https://github.com/ibm/guestbook).
 
 This example shows how to build a simple multi-tier web application using
 Kubernetes and Docker. The application consists of a web front end, Redis
