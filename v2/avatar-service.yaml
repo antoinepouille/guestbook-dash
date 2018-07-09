@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: analyzer
+  name: avatar
   labels:
-    app: analyzer
+    app: avatar
 spec:
   # comment or delete the following line if you want to use a LoadBalancer
   # type: NodePort
@@ -12,7 +12,7 @@ spec:
   # type: LoadBalancer
   ports:
   - port: 80
-    targetPort: 5000
+    targetPort: 3005
     name: http
   selector:
-    app: analyzer
+    app: avatar

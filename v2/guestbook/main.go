@@ -24,6 +24,9 @@ import (
 	"strings"
 	"time"
 
+	"io/ioutil"
+	"encoding/base64" 
+
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
 	"github.com/xyproto/simpleredis"
@@ -104,12 +107,17 @@ func ListRangeHandler(rw http.ResponseWriter, req *http.Request) {
 
 func ListPushHandler(rw http.ResponseWriter, req *http.Request) {
 	var data []byte
-
 	key := mux.Vars(req)["key"]
 	value := mux.Vars(req)["value"]
 	username := mux.Vars(req)["username"]
 
-	value += "|" + "https://avatar.tobi.sh/" + username + ".svg?text=" + username[0:2]
+	resp, _ := http.Get("http://avatar:80/" + username + ".svg?text=" + username[0:2])
+	img, _ := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+
+	encodedData := base64.StdEncoding.EncodeToString(img)
+
+	value += "|" + encodedData
 	items, err := AppendToList(value, key)
 
 	if err != nil {

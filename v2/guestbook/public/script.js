@@ -14,7 +14,7 @@ $(document).ready(function() {
         var str = val.split("|")
         var entry = str[0]
         var svg = str[1]
-        entriesElement.append("<p> <img width='25px' src='" + svg + "'> " + entry + "</p>");
+        entriesElement.append("<p> <img width='25px' src='data:image/svg+xml;base64," + svg + "'> " + entry + "</p>");
       });
     }
   }
@@ -51,9 +51,9 @@ $(document).ready(function() {
       this.value = this.value.replace(/[^a-zA-Z ]+/, '');
   });
   entryContentElement.keyup(function(e) {
-    var regex = /^[a-zA-Z0-9 ]+$/;
+    var regex = /^[a-zA-Z0-9!,.; ]+$/;
     if (regex.test(this.value) !== true)
-      this.value = this.value.replace(/[^a-zA-Z0-9 ]+/, '');
+      this.value = this.value.replace(/[^a-zA-Z0-9!,.; ]+/, '');
   });
 
   // Poll every second.
