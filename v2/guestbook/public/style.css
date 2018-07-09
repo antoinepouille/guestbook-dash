@@ -22,12 +22,21 @@ h1 {
 
 h2 {
   color: #999;
+  display: inline;
 }
 
 form {
   margin: 0 auto;
   max-width: 50em;
   text-align: center;
+}
+
+#username {
+  padding: .1em;
+  font-size: 1em;
+  max-width: 7em;
+  margin-bottom: 0;
+  padding-left: 10px;
 }
 
 input {
