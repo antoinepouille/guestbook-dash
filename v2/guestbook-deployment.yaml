@@ -18,7 +18,8 @@ spec:
     spec:
       containers:
       - name: guestbook
-        image: svennam92/guestbook:v2
+        image: nibalizer/guestbook:latest
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
