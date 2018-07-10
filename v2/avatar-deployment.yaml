@@ -1,28 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: guestbook-v2
+  name: avatar
   labels:
-    app: guestbook
-    version: "2.0"
+    app: avatar
 spec:
   selector:
     matchLabels:
-      app: guestbook
-  replicas: 2
+      app: avatar
+  replicas: 1
   template:
     metadata:
       labels:
-        app: guestbook
-        version: "2.0"
+        app: avatar
     spec:
       containers:
-      - name: guestbook
-        image: svennam92/guestbook:v2
+      - name: avatar
+        image: svennam92/avatar:v1
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
         ports:
-        - name: http
-          containerPort: 3000
+        - containerPort: 3005
+          name: http
