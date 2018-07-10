@@ -23,7 +23,6 @@ import (
 	"os"
 	"strings"
 	"time"
-
 	"io/ioutil"
 	"encoding/base64" 
 
@@ -111,9 +110,17 @@ func ListPushHandler(rw http.ResponseWriter, req *http.Request) {
 	value := mux.Vars(req)["value"]
 	username := mux.Vars(req)["username"]
 
-	resp, _ := http.Get("http://avatar:80/" + username + ".svg?text=" + username[0:2])
+	client := &http.Client{}
+	request, _ := http.NewRequest("GET", "http://avatar:80/" + username + ".svg?text=" + username[0:2],nil)
+
+	// add headers so Istio can connect spans
+	headers := getForwardHeaders(req.Header)
+	for k := range headers {
+		request.Header.Add(k, headers.Get(k))
+	}
+
+	resp, err := client.Do(request)
 	img, _ := ioutil.ReadAll(resp.Body)
-	defer resp.Body.Close()
 
 	encodedData := base64.StdEncoding.EncodeToString(img)
 
@@ -178,6 +185,27 @@ func HealthzHandler(rw http.ResponseWriter, req *http.Request) {
 	} else {
 		rw.Write([]byte("OK!"))
 	}
+}
+
+// return the needed header for distributed tracing
+func getForwardHeaders(h http.Header) (headers http.Header) {
+	incomingHeaders := []string{
+		"x-request-id",
+		"x-b3-traceid",
+		"x-b3-spanid",
+		"x-b3-parentspanid",
+		"x-b3-sampled",
+		"x-b3-flags",
+		"x-ot-span-context"}
+
+	header := make(http.Header, len(incomingHeaders))
+	for _, element := range incomingHeaders {
+		val := h.Get(element)
+		if val != "" {
+			header.Set(element, val)
+		}
+	}
+	return header
 }
 
 // Support multiple URL schemes for different use cases
