@@ -9,7 +9,9 @@ $(document).ready(function() {
   var appendGuestbookEntries = function(data) {
     entriesElement.empty();
     $.each(data, function(key, val) {
-      entriesElement.append("<p>" + val + "</p>");
+      var str = val.split("|")
+      var entry = str[0]
+      entriesElement.append("<p>" + entry + "</p>");
     });
   }
 
