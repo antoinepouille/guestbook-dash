@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: guestbook
-        image: ibmcom/guestbook:v1
+        image: nibalizer/guestbook:v1
         ports:
         - name: http-server
           containerPort: 3000
