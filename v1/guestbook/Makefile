@@ -3,7 +3,7 @@
 #   [VERSION=v1] [REGISTRY="docker.io/ibmcom"] make build
 
 VERSION?=v1
-REGISTRY?=docker.io/ibmcom
+REGISTRY?=docker.io/nibalizer
 
 all: build
 
