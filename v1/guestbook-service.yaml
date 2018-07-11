@@ -5,9 +5,10 @@ metadata:
   labels:
     app: guestbook
 spec:
+  type: NodePort
   ports:
-  - port: 3000
-    targetPort: http-server
+  - port: 80
+    targetPort: 3000
+    name: http
   selector:
     app: guestbook
-  type: LoadBalancer
