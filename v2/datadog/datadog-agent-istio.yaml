@@ -68,6 +68,10 @@ spec:
             value: "/etc/certs/datadog-agent.private_key"
           - name: DD_KUBELET_TLS_VERIFY
             value: "false"
+          - name: DD_LOGS_ENABLED
+            value: "true"
+          - name: DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL
+            value: "true"
         resources:
           requests:
             memory: "256Mi"
@@ -87,6 +91,8 @@ spec:
           - name: certs
             mountPath: /etc/certs
             readOnly: true
+          - name: pointerdir
+            mountPath: /opt/datadog-agent/run
           - name: dd-agent-config
             mountPath: /conf.d
         livenessProbe:
@@ -107,6 +113,9 @@ spec:
           name: cgroups
         - emptyDir:
           name: certs
+        - hostPath:
+            path: /opt/datadog-agent/run
+          name: pointerdir
         - name: dd-agent-config
           configMap:
             name: dd-agent-config
